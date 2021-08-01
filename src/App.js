@@ -80,14 +80,14 @@ function App() {
   useEffect(() => {
     console.log(searchValue);
     setSearchResults([]);
-    if (searchValue != "") {
+    if (data && searchValue != "") {
       ChangeResults();
     }
   }, [searchValue]);
 
   useEffect(() => {
     console.log(window.localStorage.getItem("data"));
-    let tempArray = JSON.parse(window.localStorage.getItem("data"));
+    let tempArray = window.localStorage.getItem("data") ? JSON.parse(window.localStorage.getItem("data")) : [];
     dispatch(UpdateListOfDataAction(tempArray));
   }, [])
   useEffect(() => {
@@ -125,13 +125,13 @@ function App() {
           + Add
         </AddButton>
 
-        <input autocomplete="off" onChange={(e) => { setSearchValue(e.target.value) }} value={searchValue} id="search_box" type="text" name="search" placeholder="search products" />
+        <input autoComplete="off" onChange={(e) => { setSearchValue(e.target.value) }} value={searchValue} id="search_box" type="text" name="search" placeholder="search products" />
       </MainControl>
       <MainApp>
         {searchValue == "" ?
           <ListOfItems>
-            {data.map((current, index) => (
-              <div>
+            {data && data.map((current, index) => (
+              <div key={`listItem${index}`}>
                 {/* <div onClick={() => EditItem(index)}> */}
                 <span className="removeItem" onClick={() => { DeleteItem(index) }}>X</span>
                 <Item itemData={{ current, index }} />
@@ -141,8 +141,8 @@ function App() {
           :
           <ListOfItems>
             <h2>Search results</h2>
-            {searchResults.map((current, index) => (
-              <div>
+            {searchResults && searchResults.map((current, index) => (
+              <div key={`searchResults${index}`}>
                 {/* <div onClick={() => EditItem(index)}> */}
 
                 <Item itemData={{ current, index }} />
