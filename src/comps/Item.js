@@ -45,8 +45,6 @@ const Item = ({ itemData }) => {
 
 const ItemStyled = styled.div`
 
-
-
 display:flex;
 flex-direction:row;
 justify-content: left;
@@ -67,8 +65,6 @@ button{
     right:5px;
     box-shadow:2px 2px 2px 2px;
     border:2px solid black;
-    
-
 }
 `;
 
